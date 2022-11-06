@@ -25,6 +25,7 @@ function App() {
 	const [roll] = useState(() => new Roll());
 	const [isLoading, setIsLoading] = useState(false);
 	const [currentNumber, setCurrentNumber] = useState(0);
+	const [animValue, setAnimValue] = useState(0);
 	const pivots = roll.getPivots();
 	const next = () => {
 		if (!currentNumber) {
@@ -35,12 +36,16 @@ function App() {
 			return;
 		}
 		setIsLoading(true);
+		setAnimValue(0.15);
+		setTimeout(() => setAnimValue(0.85), 500);
 		setTimeout(() => {
+			setAnimValue(0);
 			setIsLoading(false);
 			setCurrentNumber(roll.roll());
 		}, 1000);
 	};
-	console.log(roll.history)
+
+
 	return (
 		<div className={getClassName('App')}>
 			<div className='field' onClick={next}>
@@ -48,8 +53,8 @@ function App() {
 				{!isLoading && <div className='roll-result'>{currentNumber || '?'}</div>}
 			</div>
 			<div
-				className={getClassName('line' + (isLoading ? ' loading' : ''))}
-				style={isLoading ? undefined : { [isInverted() ? 'top' : 'left']: roll.lastRandom * 100 + '%' }}
+				className={getClassName('line')}
+				style={{ [isInverted() ? 'top' : 'left']: (animValue || roll.lastRandom) * 100 + '%' }}
 			/>
 			<div className={getClassName('pivots')}>
 				{pivots.slice(1).map((v, i) => (
@@ -62,7 +67,7 @@ function App() {
 						}}
 					>
 						<div>{i + 2}</div>
-						<span>{Math.floor(Number((v - pivots[i]).toFixed(3)) * 1000) / 10}</span>
+						<span>{roll.history.filter(v => v === i + 2).length}</span>
 					</div>
 				))}
 			</div>
