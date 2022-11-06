@@ -48,6 +48,7 @@ function App() {
 
 	return (
 		<div className={getClassName('App')}>
+			<div className='disclaimer'>ANTI SCAM KUBI</div>
 			<div className='field' onClick={next}>
 				{isLoading && <div className='roll' />}
 				{!isLoading && <div className='roll-result'>{currentNumber || '?'}</div>}
