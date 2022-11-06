@@ -1,38 +1,144 @@
+body,
+html {
+	overflow: hidden;
+}
+
 .App {
-  text-align: center;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: bold;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App.inverted {
+	flex-direction: row-reverse;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.pivots {
+	display: flex;
+	width: 100%;
+	height: 80px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.pivots.inverted {
+	height: 100%;
+	width: 80px;
+	flex-direction: column;
 }
 
-.App-link {
-  color: #61dafb;
+.number {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	transition: all 0.2s ease-in-out;
+	overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.number>span {
+	display: none;
+}
+
+.number>div {
+	font-size: 20px;
+	opacity: 0.5;
+}
+
+.number:hover>span {
+	display: initial;
+}
+
+.number:hover>div {
+	display: none;
+}
+
+.field {
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1;
+	background-color: rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+}
+
+.roll {
+	width: 20vh;
+	height: 20vh;
+	border-radius: 50%;
+	background: rgba(230, 10, 10, 0.5);
+	animation: grow 0.5s ease-in-out infinite alternate;
+}
+
+.roll-result {
+	font-size: 108px;
+	user-select: none;
+	animation: font-scale 0.5s ease-in-out;
+}
+
+.line {
+	position: absolute;
+	bottom: 0;
+	height: 100%;
+	width: 8px;
+	transform: translateX(-4px);
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: left 0.5s ease-in-out;
+}
+
+.line.inverted {
+	position: absolute;
+	left: 0;
+	bottom: -100%;
+	width: 100%;
+	height: 8px;
+	transform: translateY(-4px);
+	transition: top 0.5s ease-in-out;
+}
+
+.line.inverted.loading {
+	animation: move-hor 0.6s infinite alternate;
+}
+
+@keyframes grow {
+	0% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(2);
+	}
+}
+
+@keyframes font-scale {
+	0% {
+		font-size: 4px;
+	}
+
+	100% {
+		font-size: 108px;
+	}
+}
+
+@keyframes move {
+	0% {
+		left: 25%;
+	}
+
+	100% {
+		left: 75%;
+	}
+}
+
+@keyframes move-hor {
+	0% {
+		top: 25%;
+	}
+
+	100% {
+		top: 75%;
+	}
 }
