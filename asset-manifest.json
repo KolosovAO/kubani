@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/kubani/static/css/main.cb21abc8.css",
-    "main.js": "/kubani/static/js/main.509985e4.js",
+    "main.css": "/kubani/static/css/main.11ed5250.css",
+    "main.js": "/kubani/static/js/main.5538a7e8.js",
     "static/js/787.de447b10.chunk.js": "/kubani/static/js/787.de447b10.chunk.js",
     "index.html": "/kubani/index.html",
-    "main.cb21abc8.css.map": "/kubani/static/css/main.cb21abc8.css.map",
-    "main.509985e4.js.map": "/kubani/static/js/main.509985e4.js.map",
+    "main.11ed5250.css.map": "/kubani/static/css/main.11ed5250.css.map",
+    "main.5538a7e8.js.map": "/kubani/static/js/main.5538a7e8.js.map",
     "787.de447b10.chunk.js.map": "/kubani/static/js/787.de447b10.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cb21abc8.css",
-    "static/js/main.509985e4.js"
+    "static/css/main.11ed5250.css",
+    "static/js/main.5538a7e8.js"
   ]
 }
