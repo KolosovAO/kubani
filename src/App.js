@@ -18,6 +18,11 @@ function getColor(i) {
 	][i];
 }
 
+const useForceUpdate = () => {
+	const [_, setV] = useState(0);
+	return () => setV(v => v + 1);
+};
+
 const isInverted = () => window.innerHeight > window.innerWidth;
 const getClassName = (className) => isInverted() ? className + ' inverted' : className;
 
@@ -26,12 +31,10 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [currentNumber, setCurrentNumber] = useState(0);
 	const [animValue, setAnimValue] = useState(0);
-	const pivots = roll.getPivots();
+	const forceUpdate = useForceUpdate();
+	const pivots = roll.lastPivots;
+
 	const next = () => {
-		if (!currentNumber) {
-			setIsLoading(false);
-			setCurrentNumber(roll.roll());
-		}
 		if (isLoading) {
 			return;
 		}
@@ -42,9 +45,12 @@ function App() {
 			setAnimValue(0);
 			setIsLoading(false);
 			setCurrentNumber(roll.roll());
+			setTimeout(() => {
+				roll.updatePivots();
+				forceUpdate();
+			}, 1000);
 		}, 1000);
 	};
-
 
 	return (
 		<div className={getClassName('App')}>

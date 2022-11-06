@@ -17,9 +17,9 @@ export class Roll {
     static DEFAULT_MULTIPLIER = Roll.PROBABILITIES.map((v) => v / Roll.TOTAL);
     static DELTA = 0.5;
 
-
     constructor() {
         this.probabilites = [...Roll.PROBABILITIES];
+        this.lastPivots = this.getPivots();
         this.history = [];
     }
 
@@ -49,12 +49,27 @@ export class Roll {
         }
     }
 
-
     roll() {
         this.lastRandom = Math.random();
-        const index = this.getIndex(this.lastRandom, this.getPivots());
+        this.lastPivots = this.getPivots();
+        const index = this.getIndex(this.lastRandom, this.lastPivots);
         this.updateProbabilities(index);
         this.history.push(index + 2);
         return index + 2;
     }
+
+    updatePivots() {
+        this.lastPivots = this.getPivots();
+    }
 }
+
+
+// const all = Array.from({ length: 10 }, _ => new Roll).map(r => {
+//     for (let i = 0; i < 60; i++) r.roll();
+
+//     return r.history.reduce((o, v) => {
+//         o[v] = (o[v] || 0) + 1;
+//         return o;
+//     }, {});
+// });
+// console.log(all);
