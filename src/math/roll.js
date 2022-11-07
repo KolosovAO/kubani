@@ -19,7 +19,8 @@ export class Roll {
 
     constructor() {
         this.probabilites = [...Roll.PROBABILITIES];
-        this.lastPivots = this.getPivots();
+        this.pivots = this.getPivots();
+        this.prevPivots = this.pivots;
         this.history = [];
     }
 
@@ -50,16 +51,13 @@ export class Roll {
     }
 
     roll() {
-        this.lastRandom = Math.random();
-        this.lastPivots = this.getPivots();
-        const index = this.getIndex(this.lastRandom, this.lastPivots);
+        this.randomValue = Math.random();
+        this.prevPivots = this.getPivots();
+        const index = this.getIndex(this.randomValue, this.prevPivots);
         this.updateProbabilities(index);
         this.history.push(index + 2);
+        this.pivots = this.getPivots();
         return index + 2;
-    }
-
-    updatePivots() {
-        this.lastPivots = this.getPivots();
     }
 }
 
