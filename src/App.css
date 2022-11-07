@@ -36,7 +36,7 @@ html,
 	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
-	transition: all 0.7s ease-in-out;
+	transition: all 2s ease-in-out;
 	overflow: hidden;
 }
 
@@ -115,7 +115,7 @@ html,
 	justify-content: center;
 	background: radial-gradient(black, transparent);
 	color: white;
-	animation: disclaimer 2s normal forwards ease-in-out;
+	animation: disclaimer 2.5s normal forwards ease-in-out;
 }
 
 @keyframes grow {

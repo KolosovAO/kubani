@@ -15,22 +15,22 @@ export class Roll {
 
     static TOTAL = Roll.PROBABILITIES.reduce((a, b) => a + b);
     static DEFAULT_MULTIPLIER = Roll.PROBABILITIES.map((v) => v / Roll.TOTAL);
-    static DELTA = 0.5;
+    static DELTA = 0.4;
 
     constructor() {
         this.probabilites = [...Roll.PROBABILITIES];
         this.pivots = this.getPivots();
-        this.prevPivots = this.pivots;
         this.history = [];
     }
 
     updateProbabilities(index) {
+        const rollDelta = this.probabilites[index] * Roll.DELTA;
         const coef = 1 / (1 - Roll.DEFAULT_MULTIPLIER[index]);
         this.probabilites.forEach((_, i) => {
             if (i === index) {
-                this.probabilites[i] -= Roll.DELTA;
+                this.probabilites[i] -= rollDelta;
             } else {
-                this.probabilites[i] += Roll.DELTA * Roll.DEFAULT_MULTIPLIER[i] * coef;
+                this.probabilites[i] += rollDelta * Roll.DEFAULT_MULTIPLIER[i] * coef;
             }
         });
     }
@@ -52,8 +52,7 @@ export class Roll {
 
     roll() {
         this.randomValue = Math.random();
-        this.prevPivots = this.getPivots();
-        const index = this.getIndex(this.randomValue, this.prevPivots);
+        const index = this.getIndex(this.randomValue, this.pivots);
         this.updateProbabilities(index);
         this.history.push(index + 2);
         this.pivots = this.getPivots();
