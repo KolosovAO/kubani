@@ -16,6 +16,19 @@ export class Roll {
     static TOTAL = Roll.PROBABILITIES.reduce((a, b) => a + b);
     static DEFAULT_MULTIPLIER = Roll.PROBABILITIES.map((v) => v / Roll.TOTAL);
     static DELTA = 0.4;
+    static COEFS = [
+        1, // 2
+        0.9, // 3
+        0.8, // 4
+        0.7, // 5
+        0.6, // 6
+        0.5, // 7
+        0.6, // 8
+        0.7, // 9
+        0.8, // 10
+        0.9, // 11
+        1, // 12
+    ];
 
     constructor() {
         this.probabilites = [...Roll.PROBABILITIES];
@@ -24,7 +37,7 @@ export class Roll {
     }
 
     updateProbabilities(index) {
-        const rollDelta = this.probabilites[index] * Roll.DELTA;
+        const rollDelta = this.probabilites[index] * Roll.DELTA * Roll.COEFS[index];
         const coef = 1 / (1 - Roll.DEFAULT_MULTIPLIER[index]);
         this.probabilites.forEach((_, i) => {
             if (i === index) {
@@ -61,12 +74,19 @@ export class Roll {
 }
 
 
-// const all = Array.from({ length: 10 }, _ => new Roll).map(r => {
-//     for (let i = 0; i < 60; i++) r.roll();
+const all = Array.from({ length: 10 }, _ => new Roll()).map(r => {
+    for (let i = 0; i < 100; i++) r.roll();
 
-//     return r.history.reduce((o, v) => {
-//         o[v] = (o[v] || 0) + 1;
-//         return o;
-//     }, {});
-// });
-// console.log(all);
+    return r.history.reduce((o, v) => {
+        o[v] = (o[v] || 0) + 1;
+        return o;
+    }, {});
+});
+console.log('100 ROLLS');
+console.log('-----RAW------');
+console.log(all);
+console.log('------%-------');
+console.log(all.map((o) => Object.entries(o).reduce((res, [k, v]) => {
+    res[k] = v / 100;
+    return res;
+}, {})));
